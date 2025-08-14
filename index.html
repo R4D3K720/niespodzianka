@@ -3,266 +3,394 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-<title>Dziękuję, że jesteś 💖</title>
-<meta name="theme-color" content="#0d0a12"/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<title>Dziękuję, że jesteś — WOW Edition 💖</title>
+<meta name="theme-color" content="#0a0810"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 <style>
-/* ========= Design Tokens ========= */
+/* ===================== TOKENS ===================== */
 :root{
-  --bg:#0d0a12;
-  --ink:#f2eef7;
-  --ink-dim:#cbc4d7;
+  --bg:#0a0810;
+  --ink:#f5f1fa;
+  --ink-dim:#cfc7dc;
   --rose:#ff5da2;
   --vio:#8b5cf6;
-  --gold:#e7c988;
-  --card:#15101f;
-  --line:#241c31;
+  --blue:#60a5fa;
+  --gold:#f3d28f;
+  --line:#1e1826;
+  --card:#120e1a;
   --radius:18px;
-  --shadow:0 12px 30px rgba(0,0,0,.45);
+  --shadow:0 18px 40px rgba(0,0,0,.55);
 }
 
-/* ========= Base / Reset ========= */
+/* ===================== BASE / RESET ===================== */
 *,*::before,*::after{box-sizing:border-box}
 html,body{height:100%}
 body{
   margin:0; color:var(--ink);
   font:400 16px/1.55 Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   background:
-    radial-gradient(1200px 900px at 80% -10%, rgba(139,92,246,.18), transparent 60%),
-    radial-gradient(900px 600px at 10% 20%, rgba(231,201,136,.12), transparent 60%),
+    radial-gradient(1400px 900px at 80% -10%, rgba(139,92,246,.16), transparent 60%),
+    radial-gradient(900px 600px at 10% 25%, rgba(243,210,143,.12), transparent 60%),
     var(--bg);
   -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
   overflow-x:hidden;
 }
-h1,h2{font-family:"Playfair Display",serif; margin:0 0 .4rem}
-h1{font-size:clamp(36px,6vw,56px); line-height:1.1}
-h2{font-size:clamp(22px,5vw,34px); line-height:1.2}
-p{margin:.6rem 0 0; color:var(--ink-dim)}
-button{font:inherit; color:inherit}
+h1,h2{font-family:"Playfair Display",serif; margin:0 0 .5rem}
+h1{font-size:clamp(34px,6.8vw,58px); line-height:1.08}
+h2{font-size:clamp(22px,5.2vw,36px); line-height:1.15}
+p{margin:.5rem 0 0; color:var(--ink-dim)}
+a{color:inherit; text-decoration:none}
 
-/* ========= Layout ========= */
-.wrap{min-height:100%; display:flex; flex-direction:column}
-.container{width:min(760px,92%); margin-inline:auto}
-.section{padding: min(9vh,88px) 0; position:relative}
+/* ===================== LAYOUT ===================== */
+.container{width:min(780px,92%); margin-inline:auto}
+.section{padding: min(10vh,96px) 0; position:relative}
 
-/* ========= Header / Hero ========= */
-.hero{
-  padding: calc(12vh + 20px) 0 64px;
-  text-align:center; position:relative; overflow:hidden;
+/* ===================== NAV / PROGRESS ===================== */
+.progress{
+  position:fixed; inset:0 0 auto 0; height:4px; z-index:100;
+  background:linear-gradient(90deg, var(--rose), var(--vio), var(--blue));
+  transform-origin:0 50%; transform:scaleX(0);
+  box-shadow:0 2px 10px rgba(0,0,0,.35);
 }
-.kicker{
-  text-transform:uppercase; letter-spacing:.28em; color:#9e96af; font-size:.8rem;
-}
-.hero p{max-width:34ch; margin:.8rem auto 0}
+
+/* ===================== FLOATING PARALLAX BLOBS ===================== */
+.blobs{position:fixed; inset:0; pointer-events:none; z-index:-1; filter:blur(26px)}
+.blob{position:absolute; border-radius:50%; opacity:.18; mix-blend-mode:screen}
+.blob.r1{width:46vmax; height:46vmax; background:#8b5cf6; left:-10vmax; top:-6vmax}
+.blob.r2{width:38vmax; height:38vmax; background:#ff5da2; right:-8vmax; top:10vmax}
+.blob.r3{width:34vmax; height:34vmax; background:#60a5fa; left:10vmax; bottom:-12vmax}
+
+/* ===================== HERO ===================== */
+.hero{padding: calc(12vh + 24px) 0 72px; text-align:center}
+.kicker{letter-spacing:.28em; text-transform:uppercase; color:#a79fb8; font-size:.78rem}
+.h1-letters{display:inline-flex; gap:.04em; will-change:transform,opacity}
+.h1-letters span{display:inline-block; transform:translateY(.6em) rotateX(60deg); opacity:0}
+
+/* CTA */
 .cta{
-  margin-top:14px; display:inline-flex; align-items:center; gap:10px;
-  padding:.8rem 1.1rem; border-radius:999px; border:1px solid #2a2236;
-  background:linear-gradient(180deg,#191224,#120d1b);
-  box-shadow:var(--shadow); text-decoration:none
+  margin-top:16px; display:inline-flex; align-items:center; gap:10px;
+  padding:.9rem 1.15rem; border-radius:999px; border:1px solid #2e2538;
+  background:linear-gradient(180deg,#191224,#110c17);
+  box-shadow:var(--shadow)
 }
 .cta svg{opacity:.9}
 
-/* ========= Card / Message ========= */
-.stack{display:grid; gap:14px}
+/* ===================== CARDS STACK (MESSAGES) ===================== */
+.stack{display:grid; gap:16px}
 .card{
-  background: linear-gradient(180deg,#171121,#120d1b);
+  background:linear-gradient(180deg,#17121f,#120d18);
   border:1px solid var(--line);
   border-radius:var(--radius);
-  padding:18px 16px;
+  padding:18px 16px 20px;
   box-shadow:var(--shadow);
-  position:relative; overflow:hidden;
+  position:relative; overflow:hidden; transform-style:preserve-3d;
 }
-.card h2{background:linear-gradient(92deg,var(--rose),var(--vio)); -webkit-background-clip:text; background-clip:text; color:transparent}
+.card h2{
+  background:linear-gradient(92deg,var(--gold),#fff); -webkit-background-clip:text; background-clip:text; color:transparent
+}
 .card p strong{color:#fff}
 
-/* Decorative glow */
-.card::after{
-  content:""; position:absolute; inset:-40% -10% auto -10%; height:90px;
-  background: radial-gradient(closest-side, rgba(255,93,162,.12), transparent 70%);
-  transform: translateY(-40px);
+/* Decorative glows */
+.card::before{
+  content:""; position:absolute; inset:auto -10% 0 -10%; height:90px;
+  background:radial-gradient(closest-side, rgba(243,210,143,.12), transparent 70%);
+  transform:translateY(40px);
 }
 
-/* ========= Reveal animation ========= */
-.reveal{opacity:0; transform: translateY(14px) scale(.99)}
-.reveal.is-in{opacity:1; transform:none; transition:opacity .7s cubic-bezier(.2,.6,.2,1), transform .7s cubic-bezier(.2,.6,.2,1)}
-.reveal:nth-child(2).is-in{transition-delay:.03s}
-.reveal:nth-child(3).is-in{transition-delay:.06s}
-.reveal:nth-child(4).is-in{transition-delay:.09s}
+/* ===================== WOW REVEALS ===================== */
+.re{opacity:0; transform:translateY(18px) scale(.98); will-change:transform,opacity}
+.re.in{opacity:1; transform:none; transition:opacity .7s cubic-bezier(.2,.6,.2,1), transform .7s cubic-bezier(.2,.6,.2,1)}
+/* flip-in for every 2nd card */
+.card.flip{transform:rotateX(18deg) translateY(28px); transform-origin:50% 100%}
+.card.flip.in{transform:none; transition:transform .9s cubic-bezier(.2,.7,.2,1), opacity .9s}
+/* slide-from-sides */
+.slideL{transform:translateX(-28px); opacity:0}
+.slideL.in{transform:none; opacity:1; transition:.75s cubic-bezier(.2,.7,.2,1)}
+.slideR{transform:translateX(28px); opacity:0}
+.slideR.in{transform:none; opacity:1; transition:.75s cubic-bezier(.2,.7,.2,1)}
+/* pop scale */
+.pop{transform:scale(.92); opacity:0}
+.pop.in{transform:none; opacity:1; transition:.6s cubic-bezier(.12,.8,.24,1)}
 
-/* ========= Floating hearts canvas ========= */
-#hearts{position:fixed; inset:0; z-index:-1; pointer-events:none}
+/* ===================== SURPRISE STICKERS ===================== */
+.sticker{
+  position:absolute; width:64px; height:64px; display:grid; place-items:center;
+  border-radius:14px; background:linear-gradient(180deg,#241b31,#191226);
+  border:1px solid #2a2036; box-shadow:var(--shadow);
+  transform:translateY(14px) rotate(-8deg) scale(.9); opacity:0;
+}
+.sticker.in{opacity:1; transform:none; transition:transform .6s cubic-bezier(.2,.7,.2,1), opacity .6s}
+.sticker b{font-size:28px}
 
-/* ========= Footer ========= */
-.footer{padding:36px 0 60px; text-align:center; color:#9e96af}
-.small{font-size:.88rem}
+/* ===================== FOOTER ===================== */
+.footer{padding:42px 0 70px; text-align:center; color:#a79fb8}
+.small{font-size:.9rem}
 
-/* ========= Back to top ========= */
+/* ===================== BACK TO TOP ===================== */
 .back{
   position:fixed; right:16px; bottom:18px; z-index:10; opacity:0; pointer-events:none;
-  transition: opacity .25s ease, transform .25s ease;
+  transition: opacity .25s, transform .25s; transform:translateY(8px)
 }
-.back.show{opacity:1; pointer-events:auto}
+.back.show{opacity:1; pointer-events:auto; transform:none}
 .back a{
   display:inline-flex; align-items:center; gap:8px; text-decoration:none;
   padding:.75rem 1rem; border-radius:999px; border:1px solid #2a2236;
-  background:linear-gradient(180deg,#191224,#120d1b);
-  box-shadow:var(--shadow);
+  background:linear-gradient(180deg,#191224,#120d1b); box-shadow:var(--shadow)
 }
 
-/* ========= Reduced motion ========= */
+/* ===================== CANVAS FX ===================== */
+#fx,#stars{position:fixed; inset:0; pointer-events:none; z-index:-1}
+
+/* ===================== REDUCED MOTION ===================== */
 @media (prefers-reduced-motion: reduce){
-  .reveal,.back{transition:none}
+  .re,.card.flip,.slideL,.slideR,.pop,.sticker{transition:none !important; transform:none !important; opacity:1 !important}
+  .progress{display:none}
 }
 </style>
 </head>
 <body>
-<canvas id="hearts" aria-hidden="true"></canvas>
+<!-- progress bar -->
+<div class="progress" id="progress"></div>
 
-<div class="wrap">
-  <!-- HERO -->
-  <header class="hero container">
-    <div class="kicker">dla Ciebie</div>
-    <h1>Dziękuję, że <span style="background:linear-gradient(92deg,var(--gold),#fff);-webkit-background-clip:text;background-clip:text;color:transparent">jesteś</span> 💖</h1>
-    <p>Przewijaj w dół. Każde słowo jest o Tobie. Dotknij ekranu, a polecą serduszka.</p>
-    <a href="#list" class="cta" aria-label="Przewiń do wiadomości">
-      Zaczynamy
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 5v14m0 0l6-6m-6 6l-6-6" stroke="#cfc7dd" stroke-width="2" stroke-linecap="round"/></svg>
-    </a>
-  </header>
-
-  <!-- MESSAGES -->
-  <main id="list" class="section">
-    <div class="container stack">
-      <article class="card reveal">
-        <h2>Za Twoją obecność</h2>
-        <p>Dziękuję, że jesteś obok — w zwykłych dniach i w tych najważniejszych. <strong>To Ty</strong> sprawiasz, że wszystko ma sens.</p>
-      </article>
-
-      <article class="card reveal">
-        <h2>Za Twój uśmiech</h2>
-        <p>Potrafisz rozjaśnić nawet najciemniejszy dzień. Twój śmiech to <strong>moja ulubiona melodia</strong>.</p>
-      </article>
-
-      <article class="card reveal">
-        <h2>Za wsparcie</h2>
-        <p>Wierzysz we mnie, nawet gdy mi trudno. Dzięki Tobie idę dalej i <strong>staję się lepszy</strong>.</p>
-      </article>
-
-      <article class="card reveal">
-        <h2>Za czułość</h2>
-        <p>Każdy dotyk, każde spojrzenie — zapisuję w pamięci. <strong>Jesteś moim domem</strong>.</p>
-      </article>
-
-      <article class="card reveal">
-        <h2>Za nasze jutro</h2>
-        <p>Chcę budować z Tobą wszystko: plany, marzenia, codzienność. <strong>Zawsze razem</strong>.</p>
-      </article>
-
-      <article class="card reveal">
-        <h2>PS</h2>
-        <p>Gdybyś zgubiła się kiedyś w tłumie — znajdę Cię po sercu. Bo bije w rytmie, który znam najlepiej. 💫</p>
-      </article>
-    </div>
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="footer container">
-    <div class="small">© 2025 • Dla Ciebie | Przesuń w górę, by przeczytać jeszcze raz</div>
-  </footer>
+<!-- parallax blobs -->
+<div class="blobs" aria-hidden="true">
+  <div class="blob r1" id="b1"></div>
+  <div class="blob r2" id="b2"></div>
+  <div class="blob r3" id="b3"></div>
 </div>
 
-<!-- Back to top -->
+<!-- subtle particles -->
+<canvas id="stars" aria-hidden="true"></canvas>
+<!-- tap hearts/confetti -->
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<section class="hero section container">
+  <div class="kicker re">dla Ciebie</div>
+  <h1 class="re">
+    <span class="h1-letters" id="headline">
+      <!-- litery będą wstrzyknięte JS -->
+    </span>
+  </h1>
+  <p class="re pop">Przewijaj w dół. Każdy ekran to inna mała niespodzianka. Dotknij, a niebo wybuchnie serduszkami. ✨</p>
+  <a href="#list" class="cta re slideR" aria-label="Przewiń do wiadomości">
+    Zaczynamy
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 5v14m0 0l6-6m-6 6l-6-6" stroke="#cfc7dd" stroke-width="2" stroke-linecap="round"/></svg>
+  </a>
+</section>
+
+<main id="list" class="section">
+  <div class="container stack">
+    <!-- 1 -->
+    <article class="card re flip">
+      <h2>Za Twoją obecność</h2>
+      <p>Dziękuję, że jesteś obok — w zwykłych dniach i w tych najważniejszych. <strong>To Ty</strong> sprawiasz, że wszystko ma sens.</p>
+      <div class="sticker" style="right:12px; top:-18px"><b>💞</b></div>
+    </article>
+    <!-- 2 -->
+    <article class="card re slideL">
+      <h2>Za Twój uśmiech</h2>
+      <p>Rozświetlasz każdy dzień. Twój śmiech to <strong>moja ulubiona melodia</strong>.</p>
+      <div class="sticker" style="left:-8px; bottom:-16px; rotate:8deg"><b>🌙</b></div>
+    </article>
+    <!-- 3 -->
+    <article class="card re slideR">
+      <h2>Za wsparcie</h2>
+      <p>Wierzysz we mnie, nawet gdy trudno. Dzięki Tobie idę dalej i <strong>staję się lepszy</strong>.</p>
+      <div class="sticker" style="right:-8px; bottom:-16px; rotate:-6deg"><b>⭐</b></div>
+    </article>
+    <!-- 4 -->
+    <article class="card re pop">
+      <h2>Za czułość</h2>
+      <p>Każdy dotyk i spojrzenie — zapisane. <strong>Jesteś moim domem</strong>.</p>
+      <div class="sticker" style="left:10px; top:-18px"><b>🫶</b></div>
+    </article>
+    <!-- 5 -->
+    <article class="card re flip">
+      <h2>Za nasze jutro</h2>
+      <p>Chcę budować z Tobą plany, marzenia i codzienność. <strong>Zawsze razem</strong>.</p>
+      <div class="sticker" style="right:6px; top:6px"><b>🔒</b></div>
+    </article>
+    <!-- 6 -->
+    <article class="card re slideL">
+      <h2>PS</h2>
+      <p>Gdybyś zgubiła się w tłumie — znajdę Cię po sercu. Bo bije w rytmie, który znam najlepiej. 💫</p>
+      <div class="sticker" style="left:6px; top:6px"><b>💐</b></div>
+    </article>
+  </div>
+</main>
+
+<section class="section container">
+  <div class="card re pop" style="text-align:center">
+    <h2>Jeszcze jedno...</h2>
+    <p>Za wszystko dziękuję. A najbardziej — za Ciebie. <strong>Na zawsze.</strong> 💖</p>
+  </div>
+</section>
+
+<footer class="footer container">
+  <div class="small">© 2025 • Dla Ciebie</div>
+</footer>
+
 <div class="back" id="back"><a href="#top" aria-label="Do góry">▲ Do góry</a></div>
 
 <script>
-/* ========= Reveal on scroll ========= */
+/* ===================== SCROLL OBSERVERS ===================== */
 const io = new IntersectionObserver((entries)=>{
   entries.forEach(e=>{
-    if(e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target); }
+    if(e.isIntersecting){
+      e.target.classList.add('in');
+      // pokaż „stickery” chwilę po karcie
+      const st=e.target.querySelector('.sticker');
+      if(st) setTimeout(()=>st.classList.add('in'), 180);
+      io.unobserve(e.target);
+    }
   })
-},{threshold:.12});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+},{threshold:.14});
+document.querySelectorAll('.re').forEach(el=>io.observe(el));
+
+/* Back to top + progress bar */
+const back = document.getElementById('back');
+const prog = document.getElementById('progress');
+function onScroll(){
+  const y = scrollY || document.documentElement.scrollTop;
+  back.classList.toggle('show', y > 600);
+  const h = document.documentElement.scrollHeight - innerHeight;
+  const p = (h<=0)?0:(y/h);
+  prog.style.transform = `scaleX(${p})`;
+}
+addEventListener('scroll', onScroll, {passive:true}); onScroll();
 
 /* Smooth anchors */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
   a.addEventListener('click', e=>{
     const id = a.getAttribute('href').slice(1);
     const el = document.getElementById(id);
-    if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}) }
+    if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth'}) }
   })
 });
 
-/* Back to top toggle */
-const back = document.getElementById('back');
-addEventListener('scroll', ()=> back.classList.toggle('show', (scrollY||document.documentElement.scrollTop) > 600), {passive:true});
+/* ===================== HEADLINE LETTERS SEQUENCE ===================== */
+const headlineText = "Dziękuję, że jesteś";
+const headWrap = document.getElementById('headline');
+function buildLetters(){
+  headWrap.innerHTML='';
+  [...headlineText].forEach((ch,i)=>{
+    const s=document.createElement('span');
+    s.textContent=ch;
+    s.style.transition=`transform .7s cubic-bezier(.2,.7,.2,1) ${i*40}ms, opacity .7s ${i*40}ms`;
+    headWrap.appendChild(s);
+  });
+}
+buildLetters();
+requestAnimationFrame(()=>{
+  [...headWrap.children].forEach(el=>{
+    el.style.transform='translateY(0) rotateX(0)';
+    el.style.opacity='1';
+  });
+});
 
-/* ========= Floating hearts background ========= */
-const canvas = document.getElementById('hearts');
-const ctx = canvas.getContext('2d');
-let dpr = Math.min(devicePixelRatio || 1, 2);
-function size(){ canvas.width = innerWidth*dpr; canvas.height = innerHeight*dpr; canvas.style.width=innerWidth+'px'; canvas.style.height=innerHeight+'px'; }
-size(); addEventListener('resize', size, {passive:true});
+/* ===================== PARALLAX BLOBS ===================== */
+const b1=document.getElementById('b1'), b2=document.getElementById('b2'), b3=document.getElementById('b3');
+addEventListener('scroll', ()=>{
+  const y = (scrollY||document.documentElement.scrollTop);
+  b1.style.transform=`translateY(${y*.04}px)`;
+  b2.style.transform=`translateY(${y*.07}px)`;
+  b3.style.transform=`translateY(${y*.02}px)`;
+},{passive:true});
 
-const hearts = [];
-function spawnHearts(x,y, n=18){
+/* ===================== STARFIELD CANVAS (subtle) ===================== */
+const stars = document.getElementById('stars');
+const sctx = stars.getContext('2d');
+let sdpr = Math.min(devicePixelRatio||1,2);
+function sresize(){ stars.width=innerWidth*sdpr; stars.height=innerHeight*sdpr; stars.style.width=innerWidth+'px'; stars.style.height=innerHeight+'px'; }
+sresize(); addEventListener('resize', sresize, {passive:true});
+const starlets = Array.from({length:60},()=>({
+  x: Math.random()*stars.width, y: Math.random()*stars.height, r: .6 + Math.random()*1.6, p: Math.random()*Math.PI*2
+}));
+function stick(){
+  sctx.clearRect(0,0,stars.width,stars.height);
+  for(const st of starlets){
+    st.p += 0.02;
+    const a = 0.35 + Math.sin(st.p)*0.25;
+    sctx.beginPath();
+    sctx.fillStyle=`rgba(255,255,255,${a})`;
+    sctx.arc(st.x, st.y, st.r*sdpr, 0, Math.PI*2);
+    sctx.fill();
+  }
+  requestAnimationFrame(stick);
+}
+stick();
+
+/* ===================== TAP HEARTS / CONFETTI FX ===================== */
+const fx = document.getElementById('fx');
+const fctx = fx.getContext('2d');
+let dpr = Math.min(devicePixelRatio||1,2);
+function fresize(){ fx.width=innerWidth*dpr; fx.height=innerHeight*dpr; fx.style.width=innerWidth+'px'; fx.style.height=innerHeight+'px'; }
+fresize(); addEventListener('resize', fresize, {passive:true});
+
+const parts=[];
+function spawn(x,y, n=24){
   for(let i=0;i<n;i++){
-    const a = Math.random()*Math.PI*2;
-    const s = 0.6 + Math.random()*1.2;
-    hearts.push({
-      x:x*dpr, y:y*dpr, vx: Math.cos(a)*s, vy: Math.sin(a)*s - (1+Math.random()*1.4),
-      size: 6 + Math.random()*10, life: 120 + Math.random()*60, age:0,
-      hue: 320 + Math.random()*40
+    const t = Math.random()<0.6 ? 'heart' : 'star';
+    const ang = Math.random()*Math.PI*2;
+    const spd = 1 + Math.random()*2.2;
+    parts.push({
+      t, x:x*dpr, y:y*dpr, vx:Math.cos(ang)*spd, vy:Math.sin(ang)*spd - (1.4+Math.random()*1.6),
+      s: 8 + Math.random()*14, life:120 + Math.random()*70, age:0,
+      hue: 320 + Math.random()*60
     });
   }
 }
-function drawHeart(x,y,size, hue, alpha){
-  ctx.save();
-  ctx.translate(x,y);
-  ctx.scale(size/16, size/16);
-  ctx.beginPath();
-  // klasyczny kształt serca z bezierów
-  ctx.moveTo(0,-6);
-  ctx.bezierCurveTo(8,-14,18,-2,0,12);
-  ctx.bezierCurveTo(-18,-2,-8,-14,0,-6);
-  ctx.fillStyle = `hsla(${hue}deg, 95%, 65%, ${alpha})`;
-  ctx.fill();
-  ctx.restore();
+function drawHeart(x,y,size,h,alpha){
+  fctx.save(); fctx.translate(x,y); fctx.scale(size/16,size/16);
+  fctx.beginPath(); fctx.moveTo(0,-6);
+  fctx.bezierCurveTo(8,-14,18,-2,0,12);
+  fctx.bezierCurveTo(-18,-2,-8,-14,0,-6);
+  fctx.fillStyle=`hsla(${h}deg,95%,65%,${alpha})`; fctx.fill(); fctx.restore();
 }
-function tick(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-
-  // delikatna winieta
-  const g = ctx.createRadialGradient(canvas.width*.5, canvas.height*.2, 0, canvas.width*.5, canvas.height*.2, Math.max(canvas.width, canvas.height)*.8);
-  g.addColorStop(0,'rgba(231,201,136,.05)');
-  g.addColorStop(1,'rgba(0,0,0,0)');
-  ctx.fillStyle=g; ctx.fillRect(0,0,canvas.width,canvas.height);
-
-  for(let i=hearts.length-1;i>=0;i--){
-    const h = hearts[i]; h.age++;
-    h.x += h.vx; h.y += h.vy;
-    h.vx *= .985; h.vy *= .985; h.vy -= .012; // dryf w górę
-    const t = h.age/h.life;
-    if(t>=1){ hearts.splice(i,1); continue; }
-    const alpha = (1 - t) * 0.7;
-    drawHeart(h.x, h.y, (h.size*(1+t*0.8))*dpr, h.hue, alpha);
+function drawStar(x,y,size,h,alpha){
+  fctx.save(); fctx.translate(x,y); fctx.rotate((performance.now()/500)%6.28);
+  fctx.beginPath();
+  for(let i=0;i<5;i++){
+    const a=i*(Math.PI*2)/5;
+    const r1=size, r2=size*0.45;
+    fctx.lineTo(Math.cos(a)*r1, Math.sin(a)*r1);
+    fctx.lineTo(Math.cos(a+Math.PI/5)*r2, Math.sin(a+Math.PI/5)*r2);
   }
-  requestAnimationFrame(tick);
+  fctx.closePath();
+  fctx.fillStyle=`hsla(${h}deg,95%,65%,${alpha})`; fctx.fill(); fctx.restore();
 }
-tick();
-
-/* Ambient hearts co 5–9s */
-let ambient;
-(function loop(){
-  ambient = setTimeout(()=>{ spawnHearts(innerWidth*0.8, innerHeight*0.8, 10); loop(); }, 5000 + Math.random()*4000);
-})();
-
-/* Tap/click burst */
-addEventListener('pointerdown', (e)=> spawnHearts(e.clientX, e.clientY, 24));
-
-/* Reduce motion respect */
-if (matchMedia('(prefers-reduced-motion: reduce)').matches){
-  clearTimeout(ambient);
+function ftick(){
+  fctx.clearRect(0,0,fx.width,fx.height);
+  for(let i=parts.length-1;i>=0;i--){
+    const p=parts[i]; p.age++;
+    p.x += p.vx; p.y += p.vy;
+    p.vx *= .985; p.vy *= .985; p.vy -= .012;
+    const t = p.age/p.life; if(t>=1){ parts.splice(i,1); continue; }
+    const a = (1-t)*0.8;
+    if(p.t==='heart') drawHeart(p.x,p.y,p.s*dpr*(1+t*.8),p.hue,a);
+    else drawStar(p.x,p.y,p.s*dpr*(1+t*.6),p.hue,a);
+  }
+  requestAnimationFrame(ftick);
 }
+ftick();
+addEventListener('pointerdown', (e)=> spawn(e.clientX, e.clientY, 28));
+
+/* Ambient gentle burst every 6–10s at bottom-right */
+let amb; (function loop(){ amb=setTimeout(()=>{ spawn(innerWidth*0.82, innerHeight*0.82, 14); loop(); }, 6000+Math.random()*4000) })();
+
+/* ===================== SAFETY: REDUCED MOTION ===================== */
+if (matchMedia('(prefers-reduced-motion: reduce)').matches){ clearTimeout(amb); }
+
+/* ===================== LITTLE EASTER-EGG ===================== */
+/* potrójne szybkie tapnięcie w górnej części — super burst */
+let taps=0, last=0;
+addEventListener('pointerdown', (e)=>{
+  const now=performance.now();
+  if(now-last<350 && e.clientY<innerHeight*0.35){ taps++; } else { taps=1; }
+  last=now;
+  if(taps>=3){ spawn(innerWidth*0.5, innerHeight*0.35, 70); taps=0; }
+});
 </script>
+
 </body>
 </html>
