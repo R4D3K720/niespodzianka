@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>Dziękuję, że jesteś 💖</title>
+<meta name="theme-color" content="#0d0a12"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+/* ========= Design Tokens ========= */
+:root{
+  --bg:#0d0a12;
+  --ink:#f2eef7;
+  --ink-dim:#cbc4d7;
+  --rose:#ff5da2;
+  --vio:#8b5cf6;
+  --gold:#e7c988;
+  --card:#15101f;
+  --line:#241c31;
+  --radius:18px;
+  --shadow:0 12px 30px rgba(0,0,0,.45);
+}
+
+/* ========= Base / Reset ========= */
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; color:var(--ink);
+  font:400 16px/1.55 Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background:
+    radial-gradient(1200px 900px at 80% -10%, rgba(139,92,246,.18), transparent 60%),
+    radial-gradient(900px 600px at 10% 20%, rgba(231,201,136,.12), transparent 60%),
+    var(--bg);
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+h1,h2{font-family:"Playfair Display",serif; margin:0 0 .4rem}
+h1{font-size:clamp(36px,6vw,56px); line-height:1.1}
+h2{font-size:clamp(22px,5vw,34px); line-height:1.2}
+p{margin:.6rem 0 0; color:var(--ink-dim)}
+button{font:inherit; color:inherit}
+
+/* ========= Layout ========= */
+.wrap{min-height:100%; display:flex; flex-direction:column}
+.container{width:min(760px,92%); margin-inline:auto}
+.section{padding: min(9vh,88px) 0; position:relative}
+
+/* ========= Header / Hero ========= */
+.hero{
+  padding: calc(12vh + 20px) 0 64px;
+  text-align:center; position:relative; overflow:hidden;
+}
+.kicker{
+  text-transform:uppercase; letter-spacing:.28em; color:#9e96af; font-size:.8rem;
+}
+.hero p{max-width:34ch; margin:.8rem auto 0}
+.cta{
+  margin-top:14px; display:inline-flex; align-items:center; gap:10px;
+  padding:.8rem 1.1rem; border-radius:999px; border:1px solid #2a2236;
+  background:linear-gradient(180deg,#191224,#120d1b);
+  box-shadow:var(--shadow); text-decoration:none
+}
+.cta svg{opacity:.9}
+
+/* ========= Card / Message ========= */
+.stack{display:grid; gap:14px}
+.card{
+  background: linear-gradient(180deg,#171121,#120d1b);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:18px 16px;
+  box-shadow:var(--shadow);
+  position:relative; overflow:hidden;
+}
+.card h2{background:linear-gradient(92deg,var(--rose),var(--vio)); -webkit-background-clip:text; background-clip:text; color:transparent}
+.card p strong{color:#fff}
+
+/* Decorative glow */
+.card::after{
+  content:""; position:absolute; inset:-40% -10% auto -10%; height:90px;
+  background: radial-gradient(closest-side, rgba(255,93,162,.12), transparent 70%);
+  transform: translateY(-40px);
+}
+
+/* ========= Reveal animation ========= */
+.reveal{opacity:0; transform: translateY(14px) scale(.99)}
+.reveal.is-in{opacity:1; transform:none; transition:opacity .7s cubic-bezier(.2,.6,.2,1), transform .7s cubic-bezier(.2,.6,.2,1)}
+.reveal:nth-child(2).is-in{transition-delay:.03s}
+.reveal:nth-child(3).is-in{transition-delay:.06s}
+.reveal:nth-child(4).is-in{transition-delay:.09s}
+
+/* ========= Floating hearts canvas ========= */
+#hearts{position:fixed; inset:0; z-index:-1; pointer-events:none}
+
+/* ========= Footer ========= */
+.footer{padding:36px 0 60px; text-align:center; color:#9e96af}
+.small{font-size:.88rem}
+
+/* ========= Back to top ========= */
+.back{
+  position:fixed; right:16px; bottom:18px; z-index:10; opacity:0; pointer-events:none;
+  transition: opacity .25s ease, transform .25s ease;
+}
+.back.show{opacity:1; pointer-events:auto}
+.back a{
+  display:inline-flex; align-items:center; gap:8px; text-decoration:none;
+  padding:.75rem 1rem; border-radius:999px; border:1px solid #2a2236;
+  background:linear-gradient(180deg,#191224,#120d1b);
+  box-shadow:var(--shadow);
+}
+
+/* ========= Reduced motion ========= */
+@media (prefers-reduced-motion: reduce){
+  .reveal,.back{transition:none}
+}
+</style>
+</head>
+<body>
+<canvas id="hearts" aria-hidden="true"></canvas>
+
+<div class="wrap">
+  <!-- HERO -->
+  <header class="hero container">
+    <div class="kicker">dla Ciebie</div>
+    <h1>Dziękuję, że <span style="background:linear-gradient(92deg,var(--gold),#fff);-webkit-background-clip:text;background-clip:text;color:transparent">jesteś</span> 💖</h1>
+    <p>Przewijaj w dół. Każde słowo jest o Tobie. Dotknij ekranu, a polecą serduszka.</p>
+    <a href="#list" class="cta" aria-label="Przewiń do wiadomości">
+      Zaczynamy
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 5v14m0 0l6-6m-6 6l-6-6" stroke="#cfc7dd" stroke-width="2" stroke-linecap="round"/></svg>
+    </a>
+  </header>
+
+  <!-- MESSAGES -->
+  <main id="list" class="section">
+    <div class="container stack">
+      <article class="card reveal">
+        <h2>Za Twoją obecność</h2>
+        <p>Dziękuję, że jesteś obok — w zwykłych dniach i w tych najważniejszych. <strong>To Ty</strong> sprawiasz, że wszystko ma sens.</p>
+      </article>
+
+      <article class="card reveal">
+        <h2>Za Twój uśmiech</h2>
+        <p>Potrafisz rozjaśnić nawet najciemniejszy dzień. Twój śmiech to <strong>moja ulubiona melodia</strong>.</p>
+      </article>
+
+      <article class="card reveal">
+        <h2>Za wsparcie</h2>
+        <p>Wierzysz we mnie, nawet gdy mi trudno. Dzięki Tobie idę dalej i <strong>staję się lepszy</strong>.</p>
+      </article>
+
+      <article class="card reveal">
+        <h2>Za czułość</h2>
+        <p>Każdy dotyk, każde spojrzenie — zapisuję w pamięci. <strong>Jesteś moim domem</strong>.</p>
+      </article>
+
+      <article class="card reveal">
+        <h2>Za nasze jutro</h2>
+        <p>Chcę budować z Tobą wszystko: plany, marzenia, codzienność. <strong>Zawsze razem</strong>.</p>
+      </article>
+
+      <article class="card reveal">
+        <h2>PS</h2>
+        <p>Gdybyś zgubiła się kiedyś w tłumie — znajdę Cię po sercu. Bo bije w rytmie, który znam najlepiej. 💫</p>
+      </article>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer container">
+    <div class="small">© 2025 • Dla Ciebie | Przesuń w górę, by przeczytać jeszcze raz</div>
+  </footer>
+</div>
+
+<!-- Back to top -->
+<div class="back" id="back"><a href="#top" aria-label="Do góry">▲ Do góry</a></div>
+
+<script>
+/* ========= Reveal on scroll ========= */
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target); }
+  })
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* Smooth anchors */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click', e=>{
+    const id = a.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}) }
+  })
+});
+
+/* Back to top toggle */
+const back = document.getElementById('back');
+addEventListener('scroll', ()=> back.classList.toggle('show', (scrollY||document.documentElement.scrollTop) > 600), {passive:true});
+
+/* ========= Floating hearts background ========= */
+const canvas = document.getElementById('hearts');
+const ctx = canvas.getContext('2d');
+let dpr = Math.min(devicePixelRatio || 1, 2);
+function size(){ canvas.width = innerWidth*dpr; canvas.height = innerHeight*dpr; canvas.style.width=innerWidth+'px'; canvas.style.height=innerHeight+'px'; }
+size(); addEventListener('resize', size, {passive:true});
+
+const hearts = [];
+function spawnHearts(x,y, n=18){
+  for(let i=0;i<n;i++){
+    const a = Math.random()*Math.PI*2;
+    const s = 0.6 + Math.random()*1.2;
+    hearts.push({
+      x:x*dpr, y:y*dpr, vx: Math.cos(a)*s, vy: Math.sin(a)*s - (1+Math.random()*1.4),
+      size: 6 + Math.random()*10, life: 120 + Math.random()*60, age:0,
+      hue: 320 + Math.random()*40
+    });
+  }
+}
+function drawHeart(x,y,size, hue, alpha){
+  ctx.save();
+  ctx.translate(x,y);
+  ctx.scale(size/16, size/16);
+  ctx.beginPath();
+  // klasyczny kształt serca z bezierów
+  ctx.moveTo(0,-6);
+  ctx.bezierCurveTo(8,-14,18,-2,0,12);
+  ctx.bezierCurveTo(-18,-2,-8,-14,0,-6);
+  ctx.fillStyle = `hsla(${hue}deg, 95%, 65%, ${alpha})`;
+  ctx.fill();
+  ctx.restore();
+}
+function tick(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  // delikatna winieta
+  const g = ctx.createRadialGradient(canvas.width*.5, canvas.height*.2, 0, canvas.width*.5, canvas.height*.2, Math.max(canvas.width, canvas.height)*.8);
+  g.addColorStop(0,'rgba(231,201,136,.05)');
+  g.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=g; ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  for(let i=hearts.length-1;i>=0;i--){
+    const h = hearts[i]; h.age++;
+    h.x += h.vx; h.y += h.vy;
+    h.vx *= .985; h.vy *= .985; h.vy -= .012; // dryf w górę
+    const t = h.age/h.life;
+    if(t>=1){ hearts.splice(i,1); continue; }
+    const alpha = (1 - t) * 0.7;
+    drawHeart(h.x, h.y, (h.size*(1+t*0.8))*dpr, h.hue, alpha);
+  }
+  requestAnimationFrame(tick);
+}
+tick();
+
+/* Ambient hearts co 5–9s */
+let ambient;
+(function loop(){
+  ambient = setTimeout(()=>{ spawnHearts(innerWidth*0.8, innerHeight*0.8, 10); loop(); }, 5000 + Math.random()*4000);
+})();
+
+/* Tap/click burst */
+addEventListener('pointerdown', (e)=> spawnHearts(e.clientX, e.clientY, 24));
+
+/* Reduce motion respect */
+if (matchMedia('(prefers-reduced-motion: reduce)').matches){
+  clearTimeout(ambient);
+}
+</script>
+</body>
+</html>
